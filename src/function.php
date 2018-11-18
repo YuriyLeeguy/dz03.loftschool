@@ -9,13 +9,14 @@
 
 function task1($array, $boolean = false)
 {
+    $parameter = implode('<p>', $array);
+    echo $parameter;
+
     if ($boolean) {
-        $two_get_parameter = implode(' ', $array);
-        return $two_get_parameter;
-    } else {
-        $one_get_parameter = implode('<p>', $array);
-        return $one_get_parameter;
+        $parameter = implode(' ', $array);
+        return $parameter;
     }
+    return null;
 }
 
 /*Задание #2
@@ -32,36 +33,39 @@ function task2()
     $sing = array_shift($numbers); // сохранил первый параметр (знак) в переменную, с удалением и смещением
     $result = $numbers[0]; // записал значение о первом элементе массива в переменную
     $equal = " = "; // переменная для отображения равенства
-    $echo = implode(" $sing ", $numbers);
+
     switch ($sing) {
         case '+':
             for ($i = 1; $i < count($numbers); $i++) {
                 $result = $result + $numbers[$i];
             }
-            return $echo . $equal . $result;
             break;
         case '-':
             for ($i = 1; $i < count($numbers); $i++) {
                 $result = $result - $numbers[$i];
             }
-            return $echo . $equal . $result;
             break;
         case '*':
             for ($i = 1; $i < count($numbers); $i++) {
                 $result = $result * $numbers[$i];
             }
-            return $echo . $equal . $result;
             break;
         case '/':
             for ($i = 1; $i < count($numbers); $i++) {
-                $result = $result / $numbers[$i];
+                if ($numbers[$i] !== 0) {
+                    $result = $result / $numbers[$i];
+                } else {
+                    $numbers[$i] = "";
+                }
             }
-            return $echo . $equal . $result;
             break;
+
         default:
             $fail = "Не правильный первый параметр, выбери один из следующих знаков: '+', '-', '*' или '/'";
             return $fail;
     }
+    $echo = implode(" $sing ", $numbers);
+    return $echo . $equal . $result;
 }
 
 /*Задание #3(Использование рекурсии не обязательно)
@@ -72,29 +76,31 @@ function task2()
 выполнена с использованием тега <table>
 3. В остальных случаях выдавать корректную ошибку.*/
 
-function task3($rows = true, $cols = true)
+function task3($rows, $cols)
 {
     $check = func_get_args();
-    if (2 == count($check)) {
-        if (is_integer($rows) and is_integer($cols)) {
-            $table = "<table align='center' border='1'>";
-            for ($tr = 1; $tr < $rows + 1; $tr++) {
-                $table .= "<tr>";
-                for ($td = 1; $td < $cols + 1; $td++) {
-                    $table .= "<td>" . $tr * $td . "</td>";
-                }
-                $table .= "</tr>";
-            }
-            $table .= "</table>";
-            return $table;
-        } else {
-            $wrong_1 = "Ведите целое число";
-            return $wrong_1;
-        }
-    } else {
+    if (2 !== count($check)) {
         $wrong = "Не верное каличество параметров";
         return $wrong;
     }
+    if (!is_integer($rows) or !is_integer($cols)) {
+        $wrong_1 = "Ведите целое число";
+        return $wrong_1;
+    }
+    if (($rows < 1) or ($cols < 1)) {
+        $wrong_2 = "Ведите положительное число";
+        return $wrong_2;
+    }
+    $table = "<table align='center' border='1'>";
+    for ($tr = 1; $tr < $rows + 1; $tr++) {
+        $table .= "<tr>";
+        for ($td = 1; $td < $cols + 1; $td++) {
+            $table .= "<td>" . $tr * $td . "</td>";
+        }
+        $table .= "</tr>";
+    }
+    $table .= "</table>";
+    return $table;
 }
 
 /* Задание #4

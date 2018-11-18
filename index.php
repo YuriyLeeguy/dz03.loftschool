@@ -8,7 +8,7 @@ $result_1 = task1(['Я пошел на работу', 'Закрой дверь',
 echo $result_1 . DEF_LINE . DEF_LINE;
 
 echo "Задание № 2" . DEF_LINE;
-$result_2 = task2('+', 100, 100, 500);
+$result_2 = task2('/', 100, 0, 500);
 echo $result_2 . DEF_LINE . DEF_LINE;
 
 echo "Задание № 3 (Таблица)" . DEF_LINE;
